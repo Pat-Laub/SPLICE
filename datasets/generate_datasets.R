@@ -4,6 +4,12 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ################################################################################
 ################################################################################
 
+# Create directories "complexity_1", ..., "complexity_5" to organise datasets.
+for (i in c(1:5)) {
+  directory <- paste0("complexity_", i, "/")
+  dir.create(file.path(directory), showWarnings = FALSE)
+}
+
 datasets <- list()
 
 # Scenario 1 - simple, homogeneous claims experience, with zero inflation
@@ -100,10 +106,11 @@ if (packageVersion("SynthETIC") >= "1.1.0") {
 
   # Save as csv files
   for (i in c(1:5)) {
-      dataset <- datasets_cov[[i]]
-      directory <- paste0("complexity_", i, "/")
-      write.csv(dataset$claim_dataset, paste0(directory, "claim_", i, "_cov.csv"))
-      write.csv(dataset$payment_dataset, paste0(directory, "payment_", i, "_cov.csv"))
-      write.csv(dataset$incurred_dataset, paste0(directory, "incurred_", i, "_cov.csv"))
+    dataset <- datasets_cov[[i]]
+    directory <- paste0("complexity_", i, "/")
+    write.csv(dataset$claim_dataset, paste0(directory, "claim_", i, "_cov.csv"))
+    write.csv(dataset$payment_dataset, paste0(directory, "payment_", i, "_cov.csv"))
+    write.csv(dataset$incurred_dataset, paste0(directory, "incurred_", i, "_cov.csv"))
+    write.csv(dataset$covariates_data$data, paste0(directory, "covariates_", i, "_cov.csv"))
   }
 }
